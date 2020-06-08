@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/grid.css">
+</head>
+<style>
+    body {
+    font-size: 15px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    .category-item{
+        position: relative;
+        font-size: 18px;
+        color: #000;
+        font-weight: bold;
+
+    }
+
+    ul,p{
+        padding: 0;
+        margin: 0;
+    }
+
+    .clearfix:before,
+    .clearfic:after{
+        content: "";
+        display: table;
+    }
+
+    .clearfix:after{
+        clear: both;
+    }
+
+    .clearfix{
+        *zoom: 1;
+    }
+
+
+
+    .fl{
+        float: left;
+        clear: both;
+    }
+
+
+
+    .contaner{
+        display: flex;
+        width: 1200px;
+        height: 800px;
+        margin: 0 auto;
+    }
+
+    .category{
+        width: 50%;
+        border: 1px solid red;
+        padding: 10px;
+        margin: 30px;
+        border-radius: 10px;
+
+    }
+
+    .category-item{
+        position: relative;
+        display: flex;
+        margin-top: 10px;
+    }
+
+    .pic{
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        background-color: chartreuse;
+    }
+
+
+
+
+    .car{
+
+        width: 50%;
+        border: 1px solid red;
+        box-sizing: border-box;
+        padding: 10px;
+        margin: 30px;
+        border-radius: 10px;
+        position: relative;
+    }
+
+    .btn{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 100px;
+        height: 40px;
+        margin-top: 20px;
+        margin-right: 20px;
+
+    }
+
+    .title{
+        margin-left: 20px;
+    }
+
+    .price{
+        font-size: 14px;
+        color: red;
+        margin-top: 40px;
+    }
+
+    .header{
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #000;
+    }
+
+    .all{
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    .dele{
+        margin-top: 10px;
+        margin-right: 10px;
+    }
+
+    /* list */
+    .list-item{
+        display: flex;
+        position: relative;
+        margin-top: 20px;
+    }
+
+
+    .list-item-pic{
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        background-color: chartreuse;
+    }
+
+    .list-item-title{
+        margin-left: 10px;
+    }
+
+    .list-item-price{
+        margin-top: 40px;
+        color: red;
+    }
+
+    .num{
+        position: absolute;
+        bottom: 10px;
+        right: 20px;
+    }
+
+    .sub{
+        font-size: 14px;
+        width: 30px;
+        
+        
+    }
+    .add{
+        font-size: 14px;
+        width: 30px;
+    }
+
+    .totol{
+        display: inline-block;
+        margin: 0 10px;
+        padding:  0 10px;
+        font-size: 18px;
+        width: 20px;
+        height: 20px;
+        background-color: #eee;
+        line-height: 20px;
+        text-align: center;
+    }
+
+    .footer{
+        position: absolute;
+        width: 100%;
+        height: 60px;
+        background-color: #eee;
+        bottom: 0;
+        left: 0;
+        border-radius: 10px;
+        display: inline-flex;
+        justify-content: space-between;
+    }
+
+    .total-sum{
+        line-height: 60px;
+        margin-left: 20px;
+        color: red;
+    }
+    button{
+        border: 0;
+    }
+
+    .pay{
+        margin-right: 20px;
+        width: 100px;
+        height: 30px;
+        border-radius: 10px;
+        background-color:#eee;
+        border: 1px solid #000;
+        margin-top: 15px;
+    }
+
+    .payactive{
+        margin-right: 20px;
+        width: 100px;
+        height: 30px;
+        border-radius: 10px;
+        background-color:red;
+        margin-top: 15px;
+        color: #eee;
+    }
+
+    .noshop{
+        text-align: center;
+        font-size: 24px;
+        margin-top: 80px;
+        color: rgb(124, 121, 121);
+    }
+
+    .remove{
+        position: absolute;
+        right: 20px;
+        background-color: #eee;
+        width: 70px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+
+
+
+
+</style>
+<body>
+    <div id="app">
+        <div class="contaner">
+            <div class="category">
+                <ul class="category-warpper clearfix">
+                    <li class="category-item" v-for='(item,index) in categoryList' :key='index'> 
+                        <img src="" class="pic">
+                        <div class="title ">
+                            <p class="desc">{{item.desc}}</p>
+                            <p class="price">￥{{item.price}}</p>
+                        </div>
+                        <button type="button" class="btn" @click="addData(index)">加入购物车</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="car">
+                <div class="header">
+                    <div class="all">
+                        <label><input type="checkbox" name="all" id="all" v-on:click="all">全选</label>
+                    </div>
+                    <div class="dele"><button type="button" @click="dele()">全部删除</button></div>
+
+                </div>
+                <div class="noshop" v-if="awesome">你的购物车空空如也，请从左边选择商品啦！</div>
+                <ul class="list">
+                    <li class="list-item" v-for='(item,index) in shopcarList' :key='index'>
+                        <label><input type="checkbox" name="ttc" id="ttc" v-model="checkeds[index]" ></label>
+                        <img src="" class="list-item-pic">
+                        <div class="list-item-title ">
+                            <p class="list-item-desc">{{item.desc}}</p>
+                            <p class="list-item-price">￥{{item.price * item.purchaseQuantity}}</p>
+                        </div>
+                        <div class="num">
+                            <button type="button" class="sub" v-on:click="minius(index)">-</button>
+                            <span class="totol">{{item.purchaseQuantity}}</span>
+                            <button type="button" class="add" v-on:click="add(index)">+</button>
+                        </div>
+                        <div class="remove" v-on:click="oop(index)">删除</div>
+                    </li>
+                </ul>
+
+                <div class="footer">
+                    <div class="total-sum">已选（{{checkNum}}）</div>
+                    <div class="total-sum">合计:￥{{sum}}</div>
+                    <button :class="{pay:isPay,payactive:isActive}" type="submit">去结算</button>
+                </div>
+
+            </div>
+        </div>
+    </div> 
+    <script src="./js/vue.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            categoryList: [
+            {id: 1, imgUrl: '', desc:'苹果', price:'68',purchaseQuantity: 6},
+            {id: 2, imgUrl: '', desc:'番薯', price:'1099',purchaseQuantity: 4},
+            {id: 3, imgUrl: '', desc:'香蕉', price:'2345',purchaseQuantity: 2},
+                
+            ],
+            shopcarList: [ ],
+            checkeds:[ ],
+            isPay:true,
+            isActive:false,
+            awesome:true
+        },
+        computed: {
+            checkNum: function(){
+                let num=0;
+                for(let i in this.checkeds){
+                    if(this.checkeds[i]){
+                        num++;
+                        this.isPay=false;
+                        this.isActive=true;
+                    }else{
+                        this.isPay=true;
+                        this.isActive=false;
+                    }
+                }
+                return num
+            },
+            sum: function(){
+                let sum=0;
+                for(let i in this.shopcarList){
+                    if(this.checkeds[i]){
+                        sum += this.shopcarList[i].price*this.shopcarList[i].purchaseQuantity;
+                    }
+                }
+
+                return sum;
+            }
+
+        },
+        methods: {
+
+            addData(idx){
+                var arry=this.categoryList[idx]
+                var p ={id:arry.id, imgUrl: arry.imgUrl, desc:arry.desc, price:arry.price,purchaseQuantity:arry.purchaseQuantity}
+
+                if(JSON.stringify(this.shopcarList).indexOf(JSON.stringify(p)) === -1){
+                    // shopcarList中没有P
+                    this.shopcarList.push(p)
+                    this.awesome=false
+                }else{
+                    // shopcarList中有P
+                    alert('丙烯已经在购物车了哦')
+                }
+
+                
+                
+            },
+
+            add: function(index){
+                this.shopcarList[index].purchaseQuantity++
+            },
+
+            minius: function(index){
+                if(this.shopcarList[index].purchaseQuantity===1){
+                    return;
+                }
+                this.shopcarList[index].purchaseQuantity--
+            },
+
+
+            dele: function(){
+                this.shopcarList=[ ];
+                this.awesome=true
+                
+            },
+
+            all: function(){
+                // console.log(event.target.checked);
+                var ttp = this.shopcarList;
+                if(event.target.checked){
+                    this.checkeds=ttp
+                    this.isPay=false;
+                    this.isActive=true;
+
+                }else{
+                    this.checkeds=[]
+                    this.isPay=true;
+                    this.isActive=false;
+
+                    
+                }
+            },
+
+            oop: function(index){
+                this.shopcarList.splice(index,1)
+            }
+
+
+        }
+    });
+</script>
+</body>
+</html>
